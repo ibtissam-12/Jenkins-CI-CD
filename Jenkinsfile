@@ -8,7 +8,10 @@ pipeline {
         PORT = "5000"
         APP_MODULE = "app:app"  
     }
-
+triggers {
+    cron('H/5 * * * *')
+    githubPush()
+}
     stages {
         stage('Checkout') {
             steps {

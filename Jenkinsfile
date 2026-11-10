@@ -32,14 +32,29 @@ triggers {
             }
         }
 
-    stage('Run Tests') {
-    steps {
-        bat """
-        call ${VENV_DIR}\\Scripts\\activate
-        python -m pytest test_app.py -v
-        """
+ 
+stage('Run Tests') {
+    parallel {
+        stage('Test File 1') {
+            steps {
+                bat """
+                call ${VENV_DIR}\\Scripts\\activate
+                python -m pytest test_app.py -v
+                """
+            }
+        }
+
+        stage('Test File 2') {
+            steps {
+                bat """
+                call ${VENV_DIR}\\Scripts\\activate
+                python -m pytest test_app_2.py -v
+                """
+            }
+        }
     }
 }
+
 
         stage('Deploy (Local with Gunicorn)') {
             steps {
